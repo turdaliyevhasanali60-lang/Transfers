@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+      <div class="nav">
+          <h2>– TOP-150 ACCURATE PREDICTIONS –</h2>
+          <table class="content-nav">
+            <thead>
+              <tr>
+                <td>#</td>
+                <td>player</td>
+                <td>from</td>
+                <td>to</td>
+                <td>
+                  transfer fee, <br />
+                  mill. euro
+                </td>
+                <td>
+                  transfer fee, <br />
+                  mill. euro, <br />
+                  by tft.com
+                </td>
+                <td>
+                  divergence, <br> %
+                </td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      <div class="latest-transfers">
+        
+        <table class="top-players" style='margin-top: 100px'>
+            {% for transfer in top_accurate_transfers %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ transfer.player.name }}</td>
+            <td>{{ transfer.old_club.name }}</td>
+            <td>{{ transfer.new_club.name }}</td>
+            <td>{{ transfer.price }}</td>
+            <td>{{ transfer.price_tft}}</td>
+            <td>{{ transfer.moa|floatformat:2 }}</td>
+          </tr>
+            {% endfor %}
+        </table>
+        <hr>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae soluta sequi quia eos cupiditate rerum accusantium odit enim, expedita, architecto error dignissimos voluptatibus. Nisi illo, maiores fugit amet neque eveniet!</p>
+      </div>
+{% endblock %}

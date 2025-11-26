@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+      <div class="nav">
+        <h2>– ENGLAND –</h2>
+        <table class="content-nav"></table>
+      </div>
+      <div class="content" style="margin-top: 170px ;">
+          <div class="clubs">
+              <tbody>
+              {% for club in clubs %}
+              <div class="club">
+            <a href="../country-clubs.html">
+              <img src="../img/manchester.logo.png" alt="" />
+                {{ club.name }}
+            </a>
+          </div>
+              {% endfor %}
+              </tbody>
+        </div>
+      </div>
+
+{% endblock %}
