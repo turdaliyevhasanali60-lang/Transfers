@@ -2,8 +2,10 @@ import datetime
 from django.db.models import F, PositiveSmallIntegerField, ExpressionWrapper
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.db.models.functions import ExtractYear, Abs
+from django.db.models.functions import ExtractYear, Abs, Coalesce
 from .models import *
+from django.db.models import Sum, Q, F, FloatField
+from django.shortcuts import render
 
 
 class HomeView(View):
@@ -76,6 +78,7 @@ class U_20_playersView(View):
 class StatsView(View):
     def get(self, request):
         context = {
+            'last_season': Season.objects.last(),
         }
         return render(request, 'stats.html', context)
 
@@ -108,3 +111,35 @@ class TransferRecords(View):
             'transfers': transfers
         }
         return render(request, 'stats/transfer-records.html', context)
+
+class Top50ClubsByExpenditure(View):
+    def get(self, request):
+        clubs = Club.objects.annotate(
+            total_expense=Sum("import_transfers__price")
+        ).order_by('-total_expense')[:50]
+        context = {
+            'last_season': Season.objects.last(),
+            'clubs': clubs
+        }
+        return render(request, 'stats/top-50-clubs-by-expenditure.html', context)
+
+class Top50ClubsByIncome(View):
+    def get(self, request):
+        last_season = Season.objects.last()  # Define it first
+
+        clubs = Club.objects.annotate(
+            total_income=Coalesce(
+                Sum(
+                    'export_transfers__price',
+                    filter=Q(export_transfers__season=last_season)
+                ),
+                0,
+                output_field=FloatField()  # <- add this
+            )
+        ).order_by('-total_income')[:50]
+
+        context = {
+            'last_season': last_season,
+            'clubs': clubs
+        }
+        return render(request, 'stats/top-50-clubs-by-income.html', context)

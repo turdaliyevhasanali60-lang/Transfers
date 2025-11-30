@@ -9,10 +9,10 @@
             <a href="{% url 'transfer-records' %}">Transfers records</a>
           </div>
           <div>
-            <a href="./stats/top-50-clubs-by-expenditure-in-2021.html"> TOP-50 clubs by expenditure in 2020-21 </a>
+            <a href="{% url 'top-50-clubs-by-expenditure' %}"> TOP-50 clubs by expenditure in {{ last_season.name }} </a>
           </div>
           <div>
-            <a href="./stats/top-50-clubs-by-income-in-2021.html"> TOP-50 clubs by income in 2020-21 </a>
+            <a href="{% url 'top-50-clubs-by-income' %}"> TOP-50 clubs by income in {{ last_season.name }} </a>
           </div>
         </div>
       </div>

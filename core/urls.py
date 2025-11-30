@@ -18,6 +18,8 @@ urlpatterns = [
     path('country/<int:pk>/details', CountryView.as_view(), name='country'),
     path('top-150-accurate-predictions/', Top150AccuratePredictions.as_view(), name='top-150-accurate-predictions'),
     path('transfer-records/', TransferRecords.as_view(), name='transfer-records'),
+    path('top-50-clubs-by-expenditure/', Top50ClubsByExpenditure.as_view(), name='top-50-clubs-by-expenditure'),
+    path('top-50-clubs-by-income', Top50ClubsByIncome.as_view(), name='top-50-clubs-by-income'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
